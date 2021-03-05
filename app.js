@@ -1,13 +1,12 @@
 const path = require('path');
 const express = require("express");
 const app = express();
+const companydata = require('./model/companydata');
 
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
-const staticPath = path.join(__dirname, "../public");
-
-app.use(express.static(staticPath));
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("<h1>hello world from the express</h1>");
@@ -18,22 +17,54 @@ app.get("/about-us", (req, res) => {
 });
 
 app.get("/companies", (req, res) => {
-    res.send([
-    {
-    "id" : "123123134556",
-    "name" : "TalkValley LLC"
-    },
-    {
-        "id": "123312321344",
-        "name" : "Google"
-    },
-    {
-       "id": "132345344565",
-       "name" : "TCS" 
-    },
-]);
+    res.json(companydata);
 });
 
-app.listen(8000, () => {
+app.post("/companies", (req, res) => {
+    const addcompany = {
+        id : req.body.id,
+        name : req.body.name
+    }
+    companydata.push(addcompany);
+    res.json(addcompany);
+});
+
+app.put("/companies/:id", (req, res) =>{
+    let id = req.params.id;
+    let name = req.body.name;
+    let index = companydata.findIndex((companydatas) => {
+        return (companydatas.id == id);
+    });
+
+    if(index >= 0){
+        let comp = companydata[index];
+        comp.name = name
+        res.json(comp)
+    }
+
+    else{
+        res.status(404)
+        res.end()
+    }
+});
+
+app.delete("/companies/:id",(req, res) => {
+    let id = req.params.id;
+    let index = companydata.findIndex((companydatas) => {
+        return (companydatas.id == id);
+    });
+
+    if(index >= 0){
+      let comp = companydata[index]
+      companydata.splice(index,1 )
+      res.json(comp)
+    }
+    else{
+        res.status(404);
+        res.end();
+    } 
+});
+
+app.listen(3000, () => {
     console.log("listening the port at 8000");
 });
