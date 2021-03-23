@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const companydata = require('./model/companydata');
 
+
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
