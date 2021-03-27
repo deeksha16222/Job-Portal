@@ -23,5 +23,13 @@
   "bugs": {
     "url": "https://gitlab.com/deekshabisht16/myproject/issues"
   },
-  "homepage": "https://gitlab.com/deekshabisht16/myproject#readme"
+  "homepage": "https://gitlab.com/deekshabisht16/myproject#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.2"
+  }
 }
